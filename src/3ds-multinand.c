@@ -11,6 +11,10 @@ extern HWND ProgressBar;
 uint32_t drive_cnt = 0;
 DRIVE_INFO *MultiNANDDrives = NULL;
 
+int8_t nandnum;
+bool is_input, cfw;
+char nand_name[NAME_LENGTH];
+
 /* To do: add compatibility with strings from more flashcards */
 const uint8_t MAGIC_STR[MAX_TAG][TAG_LENGTH] =	{	{ 0x47, 0x41, 0x54, 0x45, 0x57, 0x41, 0x59, 0x4E, 0x41, 0x4E, 0x44 }, // "GATEWAYNAND"
 													{ 0x4D, 0x54, 0x43, 0x41, 0x52, 0x44, 0x5F, 0x4E, 0x41, 0x4E, 0x44 }, // "MTCARD_NAND"
@@ -23,7 +27,6 @@ const uint32_t emunand_sizes[5] = { O3DS_TOSHIBA_NAND, O3DS_SAMSUNG_NAND, N3DS_S
 static wchar_t wc[512] = {0};
 static wchar_t msg_info[512] = {0};
 
-wchar_t *SingleDrive;
 static wchar_t devname[30] = {0};
 static HANDLE drive = INVALID_HANDLE_VALUE;
 
@@ -961,7 +964,7 @@ int ParseDrives(HWND hWndParent, bool check_fixed)
 	uint8_t buf[SECTOR_SIZE] = {0};
 	
 	/* Get the total amount of available logical drives */
-	wchar_t LogicalDrives[MAX_PATH] = {0};
+	wchar_t LogicalDrives[MAX_PATH] = {0}, *SingleDrive;
 	uint32_t res = GetLogicalDriveStrings(MAX_PATH, LogicalDrives);
 	if (res > 0 && res <= MAX_PATH)
 	{

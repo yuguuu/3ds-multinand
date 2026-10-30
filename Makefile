@@ -4,7 +4,7 @@ HEADERS = include/resource.h include/3ds-multinand.h
 OBJS = obj/winmain.o obj/resource.o obj/fat32format.o obj/3ds-multinand.o
 DBG_OBJS = obj/winmain.o obj/resource.o obj/fat32format_dbg.o obj/3ds-multinand_dbg.o
 
-INCLUDE_DIRS = -I.\include
+INCLUDE_DIRS = -I./include
 
 CC = gcc
 LDFLAGS = -s -Wl,--subsystem,windows -lcomctl32 -lcomdlg32 -lgdi32
@@ -40,4 +40,4 @@ obj/%_dbg.o: src/%.c ${HEADERS}
 	${CC} ${CFLAGS} -D DEBUG_BUILD ${INCLUDE_DIRS} -c $< -o $@
 
 obj/resource.o: res/resource.rc res/$(PROJECT_NAME).manifest res/$(PROJECT_NAME).ico include/resource.h
-	${RC} ${INCLUDE_DIRS} -I.\res -i $< -o $@
+	${RC} ${INCLUDE_DIRS} -I./res -i $< -o $@

@@ -51,7 +51,7 @@
 #define PTR_LOW(x)				((int32_t)(x))
 #define PTR_FULL(x,y)			(((int64_t)(x) << 32) | (y))
 #define bswap_16(a)				((((a) << 8) & 0xff00) | (((a) >> 8) & 0xff))
-#define bswap_32(a)				((((a) << 24) & 0xff000000) | (((a) << 8) & 0xff0000) | (((a) >> 8) & 0xff00) | (((a) >> 24) & 0xff))
+#define bswap_32(a)				((((uint32_t)(a) << 24) & 0xff000000) | (((uint32_t)(a) << 8) & 0xff0000) | (((uint32_t)(a) >> 8) & 0xff00) | (((uint32_t)(a) >> 24) & 0xff))
 
 typedef struct {
 	wchar_t drive_str[50];
@@ -67,9 +67,9 @@ typedef struct {
 	bool rednand[MAX_NAND_NUM];
 } DRIVE_INFO;
 
-int8_t nandnum;
-bool is_input, cfw;
-char nand_name[NAME_LENGTH];
+extern int8_t nandnum;
+extern bool is_input, cfw;
+extern char nand_name[NAME_LENGTH];
 
 int GetTextSize(LPTSTR str);
 int64_t set_file_pointer(HANDLE h, int64_t new_ptr, uint32_t method);
